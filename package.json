@@ -1,0 +1,120 @@
+{
+  "name": "vigimusic",
+  "displayName": "VigiMusic",
+  "version": "1.0.0",
+  "private": false,
+  "main": "./lib/index.js",
+  "types": "./lib/index.js",
+  "publisher": "vsi",
+  "description": "VigiBot Music Bot",
+  "scripts": {
+    "test": "npm test",
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RezkyRizaldi/vigimusic.git"
+  },
+  "keywords": [
+    "bot",
+    "discord-bot",
+    "node.js",
+    "javascript",
+    "music-bot"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "galleryBanner": {
+    "color": "#0xffed2a",
+    "theme": "dark"
+  },
+  "engines": {
+    "node": "^12.19.0",
+    "npm": "^6.14.8",
+    "vscode": "^1.22.0"
+  },
+  "preview": true,
+  "markdown": "github",
+  "os": [
+    "win32",
+    "arch",
+    "x64",
+    "linux"
+  ],
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false,
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "cursorOffset": -1,
+    "embeddedLanguageFormatting": "auto",
+    "endOfLine": "lf",
+    "htmlWhitespaceSensitivity": "css",
+    "insertPragma": false,
+    "jsxBracketSameLine": false,
+    "jsxSingleQuote": false,
+    "printWidth": 80,
+    "proseWrap": "preserve",
+    "quoteProps": "as-needed",
+    "rangeEnd": 0,
+    "rangeStart": 0,
+    "requirePragma": false,
+    "useTabs": false,
+    "vueIndentScriptAndStyle": false
+  },
+  "qna": "marketplace",
+  "readme": ".github/README.md",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "workspaces": [
+    "./vigimusic.code-workspace"
+  ],
+  "author": {
+    "name": "Rezky Rizaldi",
+    "email": "rezkyrizaldi30@gmail.com",
+    "url": "https://github.com/RezkyRizaldi"
+  },
+  "activationEvents": [
+    "onLanguage:markdown",
+    "onLanguage:javascript",
+    "onLanguage:json",
+    "onLanguage:typescript"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://www.opensource.org/licenses/mit-license.php"
+    },
+    {
+      "type": "Apache-2.0",
+      "url": "https://opensource.org/licenses/apache-2.0.php"
+    },
+    {
+      "type": "ISC"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/RezkyRizaldi/vigimusic/issues",
+    "email": "rezkyrizaldi30@gmail.com"
+  },
+  "homepage": "https://github.com/RezkyRizaldi/vigimusic#readme",
+  "dependencies": {
+    "@discordjs/opus": "^0.3.2",
+    "discord.js": "^12.5.1",
+    "epipebomb": "^1.0.0",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-static": "^4.2.7",
+    "ffmpeg-stream": "^0.7.0",
+    "fs": "0.0.1-security",
+    "ms": "^2.1.3",
+    "path": "^0.12.7",
+    "simple-youtube-api": "^5.2.1",
+    "ytdl-core": "^4.4.5"
+  }
+}
