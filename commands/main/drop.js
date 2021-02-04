@@ -2,12 +2,15 @@ const { MessageEmbed } = require('discord.js');
 const {
   NAME,
   BUILD
-} = require('../config.json');
+} = require('../../config.json');
 
 module.exports = {
-  name: 'jump',
-  description: 'lompat ke musik yang ada di daftar queue',
-  execute(client, message, args) {
+  name: 'drop',
+  aliases: ['delete', 'dr'],
+  category: 'main',
+  description: 'menghapus musik tertentu yang ada di daftar queue',
+  usage: 'dr',
+  run: async (client, message, args) => {
     const { channel } = message.member.voice;
     let embed = new MessageEmbed()
       .setColor(0xffed2a)
@@ -27,7 +30,7 @@ module.exports = {
 
     if (!args[0]) {
       embed.setTitle("Lagu Tidak Ditemukan");
-      embed.setDescription(`**${message.member.displayName}**, Harap masukkan nomor queue yang ingin dituju!`);
+      embed.setDescription(`**${message.member.displayName}**, Harap masukkan nomor queue yang ingin dihapus!`);
       return message.channel.send(embed);
     }
 
@@ -37,27 +40,15 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    if (serverQueue.songs.length < args[0]) {
+    if (args[0] > serverQueue.songs.length) {
       embed.setTitle("Lagu Tidak Ditemukan");
       embed.setDescription(`**${message.member.displayName}**, jumlah queue saat ini: ${serverQueue.songs.length}`);
-      return message.channel.send(embed);
-
-      // if (args[0].substr(args[0].length - 1) === "1") {
-      //   args[0].concat("st");
-      // } else if (args[0].substr(args[0].length - 1) === "2") {
-      //   args[0].concat("nd");
-      // } else if (args[0].substr(args[0].length - 1) === "3") {
-      //   args[0].concat("rd");
-      // } else {
-      //   args[0].concat("th");
-      // }
-
+      message.channel.send(embed);
     }
-    
-    serverQueue.songs.splice(0, Math.floor(parseInt(args[0]) - 1));
-    serverQueue.connection.dispatcher.end();
-    embed.setTitle("Jump Music");
-    embed.setDescription(`Lompat menuju musik ke-${args[0]} dari daftar queue`);
+
+    serverQueue.songs.splice(args[0] - 1, 1);
+    embed.setTitle("Queue Dropped");
+    embed.setDescription(`**${message.member.displayName}**, berhasil menghapus queue`);
     return message.channel.send(embed);
   }
 }

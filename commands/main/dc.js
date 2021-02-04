@@ -2,12 +2,15 @@ const { MessageEmbed } = require('discord.js');
 const {
   NAME,
   BUILD
-} = require('../config.json');
+} = require('../../config.json');
 
 module.exports = {
-  name: 'dc',
+  name: 'disconnect',
+  aliases: ['dc', 'leave'],
+  category: 'main',
   description: 'Disconnect bot dari Voice Channel',
-  execute(client, message) {
+  usage: 'dc',
+  run: async (client, message) => {
     const channel = message.member.voice.channel
     let embed = new MessageEmbed()
       .setColor(0xffed2a)

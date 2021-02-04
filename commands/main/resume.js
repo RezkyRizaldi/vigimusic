@@ -2,12 +2,15 @@ const { MessageEmbed } = require('discord.js');
 const {
   NAME,
   BUILD
-} = require('../config.json');
+} = require('../../config.json');
 
 module.exports = {
   name: 'resume',
+  aliases: ['r'],
+  category: 'main',
   description: 'Ngeresume musik yang lagi dipause',
-  execute(client, message, args) {
+  usage: 'r',
+  run: async (client, message) => {
     const { channel } = message.member.voice;
     let embed = new MessageEmbed()
       .setColor(0xffed2a)
