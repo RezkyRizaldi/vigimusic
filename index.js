@@ -1,7 +1,8 @@
 // Discord.js Classes
 const {
   Client,
-  Collection
+  Collection,
+  MessageEmbed
 } = require('discord.js');
 
 // Packages
@@ -51,7 +52,13 @@ client.on("message", message => {
       console.log(`${message.guild.name}: ${message.author.tag} memakai ${client.commands.get(command).name} di #${message.channel.name}`);
     } catch (err) {
       console.log(err);
-      message.reply("error euy");
+      let embed = new MessageEmbed()
+        .setTitle("Command Tidak Ditemukan")
+        .setColor(0xffed2a)
+        .setTimestamp()
+        .setDescription(`**${message.member.displayName}**, Command tidak tersedia!`)
+        .setFooter(`${NAME} | ${BUILD}`, client.user.displayAvatarURL());
+      return message.channel.send(embed);
     }
   }
 });

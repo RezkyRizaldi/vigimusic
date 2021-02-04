@@ -1,16 +1,33 @@
 const ytdl = require('ytdl-core');
-const { MessageEmbed } = require('discord.js');
-const { QUEUE_LIMIT } = require('../config.json');
+const {
+  Client,
+  MessageEmbed
+} = require('discord.js');
+const {
+  NAME,
+  BUILD,
+  QUEUE_LIMIT
+} = require('../config.json');
+const { Player } = require('discord-music-player');
+const client = new Client();
+const player = new Player(client, {
+  leaveOnEmpty: false,
+  leaveOnEnd: false
+});
 
 module.exports = {
   async play (song, message) {
     const queue = message.client.queue.get(message.guild.id);
     let embed = new MessageEmbed()
-    .setColor("RED");
+      .setColor(0xffed2a)
+      .setTimestamp()
+      .setFooter(`${NAME} | ${BUILD}`, message.client.user.displayAvatarURL());
+
     if (!song) {
       queue.channel.leave();
       message.client.queue.delete(message.guild.id);
-      embed.setAuthor("TES");
+      embed.setTitle("Lagu Tidak Ditemukan");
+      embed.setDescription(`**${message.member.displayName}**, Lagu yang Anda masukkan tidak tersedia!`);
       return queue.textChannel
         .send(embed)
         .catch(console.error);
@@ -26,7 +43,9 @@ module.exports = {
       }
 
       if (err.message.includes === "copyright") {
-        return message.channel.send("Copyright euy");
+        embed.setTitle("Lagu Tidak Ditemukan")
+        embed.setDescription(`**${message.member.displayName}**, Lagu yang Anda cari berisi konten Copyright!`);
+        return message.channel.send(embed);
       } else {
         console.log(err);
       }
@@ -47,11 +66,9 @@ module.exports = {
       .on("error", console.error);
 
     dispatcher.setVolumeLogarithmic(queue.volume / 100);
-    embed.setAuthor("Jalan", message.client.user.displayAvatarURL())
-         .setDescription(`**[${song.title}](${song.url})**`);
+    embed.setTitle("Playing Music");
+    embed.setDescription(`**[${song.title}](${song.url})**`);
 
-    queue.textChannel
-      .send(embed)
-      .catch(err => message.channel.send("Teu Jalan"));
+    queue.textChannel.send(embed);
   }
 }
