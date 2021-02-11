@@ -11,17 +11,17 @@ module.exports = (client) => {
       let pull = require(`../events/${file}`);
 
       if (pull.event && typeof pull.event !== "string") {
-        table.addRow(file, 'error');
+        table.addRow(file.replace(".js", ""), '❌');
         continue;
       }
 
       pull.event = pull.event || file.replace(".js", "");
       client.on(pull.event, pull.run.bind(null, client));
-      table.addRow(file, 'tes');
+      table.addRow(file.replace(".js", ""), '✅');
     } catch (err) {
       console.log("Error saat meload file");
       console.log(err);
-      table.addRow(file, 'error');
+      table.addRow(file.replace(".js", ""), '❌');
     }
   }
   console.log(table.toString());

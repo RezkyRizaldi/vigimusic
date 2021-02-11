@@ -11,9 +11,9 @@ module.exports = (client) => {
   
       if (pull.name) {
         client.commands.set(pull.name, pull);
-        table.addRow(file, dir, 'tes');
+        table.addRow(file.replace(".js", ""), dir, '✅');
       } else {
-        table.addRow(file, dir, 'error');
+        table.addRow(file.replace(".js", ""), dir, '❌');
         continue;
       }
   

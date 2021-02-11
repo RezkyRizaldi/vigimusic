@@ -7,10 +7,9 @@ const {
 module.exports.run = async (client, message) => {
   if (!message.guild || message.author.bot) return;
 
-  const prefix = message.content.slice(PREFIX.length);
-  if (!prefix) return;
+  if (!message.content.startsWith(PREFIX)) return;
   if (!message.member) message.member = await message.guild.members.fetch(message);
-  const args = prefix.trim().split(/ +/g);
+  let args = message.content.slice(PREFIX.length).trim().split(/ +/g);
   const cmd = args.shift().toLowerCase();
 
   if (cmd.length === 0) return;
