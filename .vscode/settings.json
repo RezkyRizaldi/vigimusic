@@ -1,0 +1,7 @@
+{
+  "discord.detailsEditing": "Ngopding {filename} on {workspace}",
+  "discord.workspaceElapsedTime": true,
+  "discord.lowerDetailsEditing": "at line {currentline} of {totallines}",
+  "discord.lowerDetailsIdle": "Ngopi dulu bos",
+  "discord.detailsIdle": "Nyantuy"
+}

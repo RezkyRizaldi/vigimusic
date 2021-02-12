@@ -4,6 +4,9 @@ const {
 } = require('discord.js');
 const ms = require('ms');
 const {
+  PREFIX,
+  NAME,
+  BUILD,
   YOUTUBE_API_KEY,
   QUEUE_LIMIT
 } = require('../config.json');
@@ -17,17 +20,20 @@ module.exports = {
   description: "Mainin music",
   async execute(client, message, args) {
     let embed = new MessageEmbed()
-      .setColor('#ff0000');
+      .setColor(0xffed2a)
+      .setTimestamp()
+      .setFooter(`${NAME} | ${BUILD}`, client.user.displayAvatarURL());
 
     if (!args.length) {
-      embed.setAuthor("Salah: kuduna `play <URL> atau <title>");
+      embed.setTitle("Lagu Tidak Ditemukan")
+      embed.setDescription(`**${message.member.displayName}**, Harap masukkan judul lagu yang ingin diputar!`);
       return message.channel.send(embed);
     }
 
     const { channel } = message.member.voice;
 
     if (!channel) {
-      embed.setAuthor("Masuk VC dulu dong bos.")
+      embed.setDescription(`**${message.member.displayName}**, Masuk VC dulu dong bos.`);
       return message.channel.send(embed);
     }
 
@@ -37,7 +43,8 @@ module.exports = {
     const urlCheck = videoPattern.test(args[0]);
 
     if (!urlCheck && playlistPattern.test(args[0])) {
-      embed.setAuthor("Error playlist");
+      embed.setTitle("Lagu Tidak Ditemukan")
+      embed.setDescription(`**${message.member.displayName}**, URL yang Anda masukkan tidak tersedia!`);
       return message.channel.send(embed);
     }
 
@@ -72,10 +79,11 @@ module.exports = {
           thumbnail: songData.videoDetails.thumbnails[3].url
         };
       } catch (err) {
-        if (messgae.include === "copyright") {
-          return message
-            .reply("Copyright cuk!")
-            .catch(console.err)
+        if (message.include === "copyright") {
+          embed.setTitle("Lagu Tidak Ditemukan")
+          embed.setDescription(`**${message.member.displayName}**, Lagu yang Anda cari berisi konten Copyright!`);
+          return message.channel.send(embed)
+            .catch(console.log(err));
         } else {
           console.log(err);
         }
@@ -93,17 +101,21 @@ module.exports = {
         };
       } catch (err) {
         console.log(err);
-        return message.channel.send("Error euy sue!");
+        embed.setTitle("Lagu Tidak Ditemukan")
+        embed.setDescription(`**${message.member.displayName}**, Error duh sial!`);
+        return message.channel.send(embed);
       }
     }
 
     if (serverQueue) {
       if (serverQueue.songs.length > Math.floor(QUEUE_LIMIT - 1) && QUEUE_LIMIT !== 0) {
-        return message.channel.send(`Ga bisa nambah lagu lebih dari ${QUEUE_LIMIT}`);
+        embed.setTitle("Permisions Ditolak")
+        embed.setDescription(`**${message.member.displayName}**, Ga bisa nambah lagu lebih dari ${QUEUE_LIMIT}`);
+        return message.channel.send(embed);
       }
 
       serverQueue.songs.push(song);
-      embed.setAuthor("Nambah queue baru", client.user.displayAvatarURL());
+      embed.setTitle(`**${message.member.displayName}**, Nambah Queue Baru`);
       embed.setDescription(`**[${song.title}](${song.url})**`);
       embed.setThumbnail(song.thumbnail);
 
@@ -111,7 +123,7 @@ module.exports = {
         .send(embed)
         .catch(console.error);
     } else {
-        queueConstruct.songs.push(song);
+      queueConstruct.songs.push(song);
     }
 
     if (!serverQueue) {
@@ -129,11 +141,11 @@ module.exports = {
         return message.channel
           .send({
             embed: {
-              description: "gabisa join channel euy",
-              color: '#ff0000'
+              title: "Permissions Ditolak",
+              description: `**${message.member.displayName}**, Ga bisa Join VC euy.`
             }
           })
-        .catch(console.error);
+          .catch(console.log(err));
       }
     }
   }
