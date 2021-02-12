@@ -1,33 +1,16 @@
 const ytdl = require('ytdl-core');
-const {
-  Client,
-  MessageEmbed
-} = require('discord.js');
-const {
-  NAME,
-  BUILD,
-  QUEUE_LIMIT
-} = require('../config.json');
-const { Player } = require('discord-music-player');
-const client = new Client();
-const player = new Player(client, {
-  leaveOnEmpty: false,
-  leaveOnEnd: false
-});
+const { MessageEmbed } = require('discord.js');
+const { QUEUE_LIMIT } = require('../config.json');
 
 module.exports = {
   async play (song, message) {
     const queue = message.client.queue.get(message.guild.id);
     let embed = new MessageEmbed()
-      .setColor(0xffed2a)
-      .setTimestamp()
-      .setFooter(`${NAME} | ${BUILD}`, message.client.user.displayAvatarURL());
-
+    .setColor("RED");
     if (!song) {
       queue.channel.leave();
       message.client.queue.delete(message.guild.id);
-      embed.setTitle("Lagu Tidak Ditemukan");
-      embed.setDescription(`**${message.member.displayName}**, Lagu yang Anda masukkan tidak tersedia!`);
+      embed.setAuthor("TES");
       return queue.textChannel
         .send(embed)
         .catch(console.error);
@@ -43,9 +26,7 @@ module.exports = {
       }
 
       if (err.message.includes === "copyright") {
-        embed.setTitle("Lagu Tidak Ditemukan")
-        embed.setDescription(`**${message.member.displayName}**, Lagu yang Anda cari berisi konten Copyright!`);
-        return message.channel.send(embed);
+        return message.channel.send("Copyright euy");
       } else {
         console.log(err);
       }
@@ -66,9 +47,11 @@ module.exports = {
       .on("error", console.error);
 
     dispatcher.setVolumeLogarithmic(queue.volume / 100);
-    embed.setTitle("Playing Music");
-    embed.setDescription(`**[${song.title}](${song.url})**`);
+    embed.setAuthor("Jalan", message.client.user.displayAvatarURL())
+         .setDescription(`**[${song.title}](${song.url})**`);
 
-    queue.textChannel.send(embed);
+    queue.textChannel
+      .send(embed)
+      .catch(err => message.channel.send("Teu Jalan"));
   }
 }
