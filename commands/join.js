@@ -2,15 +2,12 @@ const { MessageEmbed } = require('discord.js');
 const {
   NAME,
   BUILD
-} = require('../../config.json');
+} = require('../config.json');
 
 module.exports = {
   name: 'join',
-  aliases: ['vc', 'j'],
-  category: 'main',
   description: 'Masukin bot ke Voice Channel',
-  usage: 'join',
-  run: async (client, message) => {
+  execute(client, message) {
     const channel = message.member.voice.channel;
     let embed = new MessageEmbed()
       .setColor(0xffed2a)

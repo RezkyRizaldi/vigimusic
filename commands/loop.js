@@ -2,15 +2,12 @@ const { MessageEmbed } = require('discord.js');
 const {
   NAME,
   BUILD
-} = require('../../config.json');
+} = require('../config.json');
 
 module.exports = {
-  name: 'nowplaying',
-  aliases: ['np', 'now'],
-  category: 'main',
-  description: 'Cek daftar lagu yang sedang diputar',
-  usage: 'np',
-  run: async (client, message) => {
+  name: 'loop',
+  description: 'loop musik yang lagi diputar',
+  execute(client, message) {
     const { channel } = message.member.voice;
     let embed = new MessageEmbed()
       .setColor(0xffed2a)
@@ -18,21 +15,19 @@ module.exports = {
       .setFooter(`${NAME} | ${BUILD}`, client.user.displayAvatarURL());
 
     if (!channel) {
-      embed.setTitle("Permissions Ditolak")
       embed.setDescription(`**${message.member.displayName}**, Masuk VC dulu dong bos.`);
       return message.channel.send(embed);
     }
 
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!serverQueue) {
-      embed.setTitle("Lagu Tidak Ditemukan");
-      embed.setDescription(`**${message.member.displayName}**, BOTnya lagi nganggur`);
+      embed.setDescription(`**${message.member.displayName}**, Ga ada musik yang lagi diputar bang.`);
       return message.channel.send(embed);
     }
 
-    embed.setTitle("NOW PLAYING");
-    embed.setDescription(`${serverQueue.songs[0].title}`);
-    embed.setThumbnail(serverQueue.songs[0].thumbnail);
+    serverQueue.loop = !serverQueue.loop;
+    embed.setTitle(`Music ${serverQueue.loop ? "Looped" : "Disabled"}`);
+    embed.setDescription(`Loop ${serverQueue.loop ? "Nyala" : "Mati"}`);
     return message.channel.send(embed);
   }
 }

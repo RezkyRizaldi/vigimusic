@@ -14,8 +14,6 @@ const player = new Player(client, {
   leaveOnEmpty: false,
   leaveOnEnd: false
 });
-client.queue = new Map();
-client.vote = new Map();
 
 module.exports = {
   async play (song, message) {

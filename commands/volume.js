@@ -2,15 +2,13 @@ const { MessageEmbed } = require('discord.js');
 const {
   NAME,
   BUILD
-} = require('../../config.json');
+} = require('../config.json');
 
 module.exports = {
   name: 'volume',
-  aliases: ['vl'],
-  category: 'moderation',
   description: 'Ngatur volume musik yang lagi diputar',
-  usage: 'vl <amount>',
-  run: async (client, message, args) => {
+  execute(client, message, args) {
+    
     const { channel } = message.member.voice;
     let embed = new MessageEmbed()
       .setColor(0xffed2a)

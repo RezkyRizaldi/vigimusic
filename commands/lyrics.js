@@ -4,15 +4,12 @@ const Client = new Genius.Client("ZD_lLHBwRlRRfQvVLAnHKHksDHQv9W1wm1ZAByPaYo1o2N
 const {
   NAME,
   BUILD
-} = require('../../config.json');
+} = require('../config.json');
 
 module.exports = {
   name: 'lyrics',
-  aliases: ['ly'],
-  category: 'main',
   description: 'Liat lirik musik yang lagi diputar',
-  usage: 'ly <title>',
-  run: async (client, message, args) => {
+  async execute(client, message, args) {
     const { channel } = message.member.voice;
     let embed = new MessageEmbed()
       .setColor(0xffed2a)

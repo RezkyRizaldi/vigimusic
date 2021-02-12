@@ -1,22 +1,24 @@
-const { MessageEmbed } = require('discord.js');
 const {
+  MessageEmbed,
+  Util
+} = require('discord.js');
+const ms = require('ms');
+const {
+  PREFIX,
   NAME,
   BUILD,
   YOUTUBE_API_KEY,
   QUEUE_LIMIT
-} = require('../../config.json');
+} = require('../config.json');
 const ytdl = require('ytdl-core');
 const YoutubeAPI = require('simple-youtube-api');
 const youtube = new YoutubeAPI(YOUTUBE_API_KEY);
-const { play } = require('../../system/music');
+const { play } = require('../system/music');
 
 module.exports = {
   name: "play",
-  aliases: ["p"],
-  category: 'main',
   description: "Mainin music",
-  usage: "p <title>",
-  run: async (client, message, args) => {
+  async execute(client, message, args) {
     let embed = new MessageEmbed()
       .setColor(0xffed2a)
       .setTimestamp()

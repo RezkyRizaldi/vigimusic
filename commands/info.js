@@ -2,17 +2,14 @@ const { MessageEmbed } = require('discord.js');
 const {
   NAME,
   BUILD
-} = require('../../config.json');
+} = require('../config.json');
 const ms = require('ms');
 
 module.exports = {
   name: 'info',
-  aliases: ['botinfo', 'vigimusic'],
-  category: 'info',
   description: 'VigiMusic Bot Info',
-  usage: 'info',
-  run: async (client, message) => {
-    // console.log(client.queue.size);
+  execute(client, message) {
+    console.log(client.queue.size);
     console.log(client.user.presence);
     let embed = new MessageEmbed()
       .setColor(0xffed2a)

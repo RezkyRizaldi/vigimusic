@@ -2,15 +2,12 @@ const { MessageEmbed } = require('discord.js');
 const {
   NAME,
   BUILD
-} = require('../../config.json');
+} = require('../config.json');
 
 module.exports = {
   name: 'pause',
-  aliases: ['ps'],
-  category: 'main',
   description: 'Ngepause musik yang lagi jalan',
-  usage: 'ps',
-  run: async (client, message) => {
+  execute(client, message) {
     const { channel } = message.member.voice;
     let embed = new MessageEmbed()
       .setColor(0xffed2a)

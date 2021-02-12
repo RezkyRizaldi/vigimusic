@@ -106,7 +106,6 @@
   "homepage": "https://github.com/RezkyRizaldi/vigimusic#readme",
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
-    "ascii-table": "0.0.9",
     "discord-music-player": "^6.4.1",
     "discord.js": "^12.5.1",
     "epipebomb": "^1.0.0",
